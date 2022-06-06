@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <shapes.hpp>
+#include <lines.hpp>
+#include <circles.hpp>
 //#include <camera.hpp>
 //#include<camera.hpp>
 namespace mt

@@ -2,32 +2,22 @@
 #include <camera.hpp>
 namespace mt
 {
-	class Sphere
+	class Shapes
 	{
 	public:
-		Sphere(double x0, double y0, double z0, double r);
-		~Sphere();
-		void Rotate(double t);
+		Shapes(double x0, double y0, double z0, double r);
+		virtual ~Shapes();
+		virtual void Rotate(double t) = 0;
 		Point Get_Points(int i);
 		int Get_Size();
-	private:
+	protected:
 		Point* m_points = nullptr;
 		int m_size = 0;
 		double m_x0, m_y0, m_z0, m_r;
+
 	};
-	class Line
-	{
-	public:
-		Line(double x0, double y0, double z0, double r, double fi, double teta);
-		~Line();
-		void Rotate(double t);
-		Point Get_Points(int i);
-		int Get_Size();
-	private:
-		Point* m_points = nullptr;
-		int m_size = 0;
-		double m_x0, m_y0, m_z0, m_fi, m_teta, m_r;
-	};
+	
+	
 	/*class Pillar
 	{
 	public:
