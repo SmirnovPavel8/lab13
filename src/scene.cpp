@@ -20,7 +20,8 @@ double y0 = 0;
 double z0 = 0;
 double length = 1;
 double radius = 0.1;
-pillar = std::make_unique<Line>(x0, y0, z0, 0.1*N*2-2*0.1, 0, 3.14 / 2);
+pillar = std::make_unique<Line>(x0, y0, z0, radius*N*2-2*radius, 0, 3.14 / 2);
+//pillar2 = std::make_unique<Pillar>(x0, y0, 2, 1);
 for (int i = 0; i < m_N; i++)
 {
 	lines.push_back(new Line((i * 0.2)+x0, y0, z0, length, 0, 3.14));
@@ -138,9 +139,11 @@ for (int i = 0; i < m_N; i++)
 					flag_c = true;
 					for (int i = 0; i < m_N1; i++)
 					{
+						
 						lines[i]->Rotate(t);
+						lines[i]->Recolor(first_c);
 						spheres[i]->Rotate(t);
-
+						spheres[i]->Recolor(first_c);
 					}
 
 				}
@@ -151,9 +154,11 @@ for (int i = 0; i < m_N; i++)
 					flag_c = false;
 					for (int i = m_N - m_N1; i < m_N; i++)
 					{
+						
 						lines[i]->Rotate(t);
+						lines[i]->Recolor(second_c);
 						spheres[i]->Rotate(t);
-
+						spheres[i]->Recolor(second_c);
 					}
 				}
 			}
@@ -164,32 +169,26 @@ for (int i = 0; i < m_N; i++)
 			int line_size = lines[0]->Get_Size();
 			for (int i = 0; i < sphere_size; i++)
 			{
-				//m_camera->ProjectPoint(circle->Get_Points(i), { 255, 0 ,0, 255 });
-				//m_camera->ProjectPoint(circle1->Get_Points(i), { 0, 0 ,255, 255 });
+				
+				
 				for (int j = 0; j < m_N; j++)
-					m_camera->ProjectPoint(spheres[j]->Get_Points(i), { 255,0,0,255 });
-				if (flag_c == true)
-					for (int k = 0; k < m_N1; k++)
-					{
-						m_camera->ProjectPoint(spheres[k]->Get_Points(i), first_c);
-					}
-				if (flag_c == false)
-					for (int h = m_N - m_N1; h < m_N; h++)
-					{
-						m_camera->ProjectPoint(spheres[h]->Get_Points(i), second_c);
-					}
+					m_camera->ProjectPoint(spheres[j]->Get_Points(i), spheres[j]->Get_Color());
+				
 			}
 			for (int i = 0; i < line_size; i++)
 			{
-				//m_camera->ProjectPoint(line->Get_Points(i), { 0, 255 ,0, 255 });
-				//m_camera->ProjectPoint(line1->Get_Points(i), { 0, 255 ,255, 255 });
+				
 				for (int j = 0; j < m_N; j++)
-					m_camera->ProjectPoint(lines[j]->Get_Points(i), { 0, 255 ,255, 255 });
+					m_camera->ProjectPoint(lines[j]->Get_Points(i), lines[j]->Get_Color());
 			}
 			for (int i = 0; i < pillar->Get_Size(); i++)
 			{
 				m_camera->ProjectPoint(pillar->Get_Points(i), { 0, 255 ,255, 255 });
 			}
+			/*for (int i = 0; i < pillar2->Get_Size(); i++)
+			{
+				m_camera->ProjectPoint(pillar2->Get_Points(i), { 0, 255 ,255, 255 });
+			}*/
 			m_texture->update((uint8_t*)m_camera->Picture(), 1920, 1080, 0, 0);
 			m_camera->Clear();
 

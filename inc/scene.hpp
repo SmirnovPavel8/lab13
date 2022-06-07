@@ -23,6 +23,7 @@ namespace mt
 		//std::unique_ptr<Sphere> circle1;
 		//std::unique_ptr<Line> line;
 		std::unique_ptr<Line> pillar;
+		//std::unique_ptr<Pillar> pillar2;
 		//std::unique_ptr<Line> pillar2;
 		//std::unique_ptr<Line> line1;
 		int m_width;

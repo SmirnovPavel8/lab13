@@ -9,9 +9,12 @@ namespace mt
 		virtual ~Shapes();
 		virtual void Rotate(double t) = 0;
 		Point Get_Points(int i);
+		Pixel Get_Color();
+		void Recolor(Pixel p);
 		int Get_Size();
 	protected:
 		Point* m_points = nullptr;
+		Pixel color;
 		int m_size = 0;
 		double m_x0, m_y0, m_z0, m_r;
 
