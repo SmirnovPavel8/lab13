@@ -17,19 +17,14 @@ namespace mt
 
 	private:
 		std::unique_ptr<Camera> m_camera;
-		//std::unique_ptr<Sphere> circle;
-		std::vector<Line*>lines;
-		std::vector<Sphere*>spheres;
-		//std::unique_ptr<Sphere> circle1;
-		//std::unique_ptr<Line> line;
-		std::unique_ptr<Line> pillar;
+		std::vector<Line*>lines;//массив нитей
+		std::vector<Sphere*>spheres;//массив шаров
+		std::unique_ptr<Line> pillar;//опора
 		//std::unique_ptr<Pillar> pillar2;
-		//std::unique_ptr<Line> pillar2;
-		//std::unique_ptr<Line> line1;
 		int m_width;
 		int m_height;
-		int m_N;
-		int m_N1;
+		int m_N;//кол-во шаров и нитей
+		int m_N1;//кол-во колеблющихся шаров и нитей
 		std::unique_ptr<sf::RenderWindow> m_window;
 		std::unique_ptr<sf::Texture> m_texture;
 		std::unique_ptr<sf::Sprite> m_sprite;

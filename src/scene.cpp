@@ -15,17 +15,18 @@ Intrinsic intrinsic = { 960.0, 540.0, 960.0, 540.0 };
 Point position = { 0.0, 0.0, 0.0 };
 Angles angles = { 0.0,0.0,0.0 };
 m_camera = std::make_unique<Camera>(m_width, m_height, intrinsic, position, angles);
+//начальные координаты
 double x0 = 0;
 double y0 = 0;
 double z0 = 0;
-double length = 1;
-double radius = 0.1;
-pillar = std::make_unique<Line>(x0, y0, z0, radius*N*2-2*radius, 0, 3.14 / 2);
+double length = 1;//длина нитей
+double radius = 0.1;//радиус шара
+pillar = std::make_unique<Line>(x0, y0, z0, radius*N*2-2*radius, 0, 3.14 / 2);//создание опоры
 //pillar2 = std::make_unique<Pillar>(x0, y0, 2, 1);
 for (int i = 0; i < m_N; i++)
 {
-	lines.push_back(new Line((i * 0.2)+x0, y0, z0, length, 0, 3.14));
-	spheres.push_back(new Sphere((i * 0.2)+x0, y0, z0-length, radius));
+	lines.push_back(new Line((i * 0.2)+x0, y0, z0, length, 0, 3.14));//создание массива нитей
+	spheres.push_back(new Sphere((i * 0.2)+x0, y0, z0-length, radius));//создание массива шаров
 }
 	}
 	Scene::~Scene()
@@ -35,13 +36,11 @@ for (int i = 0; i < m_N; i++)
 	void Scene::LifeCycle()
 	{
 		srand(time(0));
-		double t = 130;
-		bool flag = true;
-		bool flag_c = true;
-		int sphere_size = spheres[0]->Get_Size();
-		int line_size = lines[0]->Get_Size();
-		Pixel first_c = { 255,0,0,255 };
-		Pixel second_c= { 255,0,0,255 };
+		double t = 130;//угол
+		bool flag = true;//флаг движения
+		int sphere_size = spheres[0]->Get_Size();//кол-во точек сферы
+		int line_size = lines[0]->Get_Size();//кол-во точек нити
+		Pixel first_c = { 255,0,0,255 };//начальный цвет фигру
 		while (m_window->isOpen()) {
 			sf::Event event;
 			while (m_window->pollEvent(event))
@@ -80,6 +79,7 @@ for (int i = 0; i < m_N; i++)
 			{
 				m_camera->dRoll(0.02);
 			}
+			//колебания маятника
 			if (t >= 230)
 				flag = false;
 			if (t <= 130)
@@ -136,7 +136,6 @@ for (int i = 0; i < m_N; i++)
 				{
 					t += 0.5;
 					first_c = { unsigned char(rand() % 254),unsigned char(rand() % 254) ,unsigned char(rand() % 254) ,255 };
-					flag_c = true;
 					for (int i = 0; i < m_N1; i++)
 					{
 						
@@ -150,23 +149,21 @@ for (int i = 0; i < m_N; i++)
 				else
 				{
 					t -= 0.5;
-					second_c = { unsigned char(rand() % 254),unsigned char(rand() % 254) ,unsigned char(rand() % 254) ,255 };
-					flag_c = false;
+					first_c = { unsigned char(rand() % 254),unsigned char(rand() % 254) ,unsigned char(rand() % 254) ,255 };
 					for (int i = m_N - m_N1; i < m_N; i++)
 					{
 						
 						lines[i]->Rotate(t);
-						lines[i]->Recolor(second_c);
+						lines[i]->Recolor(first_c);
 						spheres[i]->Rotate(t);
-						spheres[i]->Recolor(second_c);
+						spheres[i]->Recolor(first_c);
 					}
 				}
 			}
 		//не уверен что это лучше для работоспособности
-			//Rotation(m_N, m_N1, t, flag, flag_c, first_c, second_c, lines, spheres);
-			//Paint(m_N, m_N1, flag_c, first_c, second_c, lines, spheres, pillar, *m_camera);
-			int sphere_size = spheres[0]->Get_Size();
-			int line_size = lines[0]->Get_Size();
+			//Rotation(m_N, m_N1, t, flag, first_c, lines, spheres);
+			//Paint(m_N, m_N1,lines, spheres, pillar, *m_camera);
+			//отрисовка фигур
 			for (int i = 0; i < sphere_size; i++)
 			{
 				

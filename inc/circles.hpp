@@ -7,7 +7,7 @@ namespace mt
 	public:
 		Sphere(double x0, double y0, double z0, double r);
 		virtual ~Sphere();
-		void Rotate(double t) override;
+		void Rotate(double t) override;//функция поворота
 		/*private:
 			Point* m_points = nullptr;
 			int m_size = 0;

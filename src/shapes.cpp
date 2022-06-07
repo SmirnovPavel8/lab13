@@ -4,11 +4,15 @@ namespace mt
 	
 	Shapes::Shapes(double x0, double y0, double z0, double r)
 	{
+		
 		m_r = r;
+		
 		m_x0 = x0;
 		m_y0 = y0;
 		m_z0 = z0;
+	
 		m_points = new Point[200000];
+		
 		color.r = 255;
 		color.b = 0;
 		color.g = 0;
