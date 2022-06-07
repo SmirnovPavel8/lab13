@@ -15,11 +15,16 @@ Intrinsic intrinsic = { 960.0, 540.0, 960.0, 540.0 };
 Point position = { 0.0, 0.0, 0.0 };
 Angles angles = { 0.0,0.0,0.0 };
 m_camera = std::make_unique<Camera>(m_width, m_height, intrinsic, position, angles);
-pillar = std::make_unique<Line>(0, 0, 0, 0.1*N*2-2*0.1, 0, 3.14 / 2);
+double x0 = 0;
+double y0 = 0;
+double z0 = 0;
+double length = 1;
+double radius = 0.1;
+pillar = std::make_unique<Line>(x0, y0, z0, 0.1*N*2-2*0.1, 0, 3.14 / 2);
 for (int i = 0; i < m_N; i++)
 {
-	lines.push_back(new Line((i * 0.2), 0, 0, 1, 0, 3.14));
-	spheres.push_back(new Sphere((i * 0.2), 0, -1, 0.1));
+	lines.push_back(new Line((i * 0.2)+x0, y0, z0, length, 0, 3.14));
+	spheres.push_back(new Sphere((i * 0.2)+x0, y0, z0-length, radius));
 }
 	}
 	Scene::~Scene()
@@ -28,11 +33,14 @@ for (int i = 0; i < m_N; i++)
 
 	void Scene::LifeCycle()
 	{
-
+		srand(time(0));
 		double t = 130;
 		bool flag = true;
+		bool flag_c = true;
 		int sphere_size = spheres[0]->Get_Size();
 		int line_size = lines[0]->Get_Size();
+		Pixel first_c = { 255,0,0,255 };
+		Pixel second_c= { 255,0,0,255 };
 		while (m_window->isOpen()) {
 			sf::Event event;
 			while (m_window->pollEvent(event))
@@ -71,7 +79,6 @@ for (int i = 0; i < m_N; i++)
 			{
 				m_camera->dRoll(0.02);
 			}
-			
 			if (t >= 230)
 				flag = false;
 			if (t <= 130)
@@ -86,7 +93,7 @@ for (int i = 0; i < m_N; i++)
 						lines[i]->Rotate(t);
 						spheres[i]->Rotate(t);
 					}
-					
+
 				}
 				else
 				{
@@ -96,10 +103,10 @@ for (int i = 0; i < m_N; i++)
 						lines[i]->Rotate(t);
 						spheres[i]->Rotate(t);
 					}
-					
+
 				}
 			}
-			if(t>180)
+			if (t > 180)
 			{
 				if (flag == true)
 				{
@@ -109,7 +116,7 @@ for (int i = 0; i < m_N; i++)
 						lines[i]->Rotate(t);
 						spheres[i]->Rotate(t);
 					}
-					
+
 				}
 				else
 				{
@@ -119,7 +126,7 @@ for (int i = 0; i < m_N; i++)
 						lines[i]->Rotate(t);
 						spheres[i]->Rotate(t);
 					}
-					
+
 				}
 			}
 			if (t == 180)
@@ -127,42 +134,62 @@ for (int i = 0; i < m_N; i++)
 				if (flag == true)
 				{
 					t += 0.5;
+					first_c = { unsigned char(rand() % 254),unsigned char(rand() % 254) ,unsigned char(rand() % 254) ,255 };
+					flag_c = true;
 					for (int i = 0; i < m_N1; i++)
 					{
 						lines[i]->Rotate(t);
 						spheres[i]->Rotate(t);
+
 					}
 
 				}
 				else
 				{
 					t -= 0.5;
+					second_c = { unsigned char(rand() % 254),unsigned char(rand() % 254) ,unsigned char(rand() % 254) ,255 };
+					flag_c = false;
 					for (int i = m_N - m_N1; i < m_N; i++)
 					{
 						lines[i]->Rotate(t);
 						spheres[i]->Rotate(t);
+
 					}
 				}
 			}
+		//не уверен что это лучше для работоспособности
+			//Rotation(m_N, m_N1, t, flag, flag_c, first_c, second_c, lines, spheres);
+			//Paint(m_N, m_N1, flag_c, first_c, second_c, lines, spheres, pillar, *m_camera);
+			int sphere_size = spheres[0]->Get_Size();
+			int line_size = lines[0]->Get_Size();
 			for (int i = 0; i < sphere_size; i++)
 			{
 				//m_camera->ProjectPoint(circle->Get_Points(i), { 255, 0 ,0, 255 });
 				//m_camera->ProjectPoint(circle1->Get_Points(i), { 0, 0 ,255, 255 });
 				for (int j = 0; j < m_N; j++)
-					m_camera->ProjectPoint(spheres[j]->Get_Points(i), { 255, 0 ,255, 255 });
+					m_camera->ProjectPoint(spheres[j]->Get_Points(i), { 255,0,0,255 });
+				if (flag_c == true)
+					for (int k = 0; k < m_N1; k++)
+					{
+						m_camera->ProjectPoint(spheres[k]->Get_Points(i), first_c);
+					}
+				if (flag_c == false)
+					for (int h = m_N - m_N1; h < m_N; h++)
+					{
+						m_camera->ProjectPoint(spheres[h]->Get_Points(i), second_c);
+					}
 			}
 			for (int i = 0; i < line_size; i++)
 			{
 				//m_camera->ProjectPoint(line->Get_Points(i), { 0, 255 ,0, 255 });
 				//m_camera->ProjectPoint(line1->Get_Points(i), { 0, 255 ,255, 255 });
-				for(int j=0;j<m_N;j++)
-				m_camera->ProjectPoint(lines[j]->Get_Points(i), { 0, 255 ,255, 255 });
+				for (int j = 0; j < m_N; j++)
+					m_camera->ProjectPoint(lines[j]->Get_Points(i), { 0, 255 ,255, 255 });
 			}
 			for (int i = 0; i < pillar->Get_Size(); i++)
 			{
 				m_camera->ProjectPoint(pillar->Get_Points(i), { 0, 255 ,255, 255 });
 			}
-
 			m_texture->update((uint8_t*)m_camera->Picture(), 1920, 1080, 0, 0);
 			m_camera->Clear();
 

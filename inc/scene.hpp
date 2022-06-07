@@ -1,8 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <shapes.hpp>
-#include <lines.hpp>
-#include <circles.hpp>
+//#include <shapes.hpp>
+//#include <lines.hpp>
+//#include <circles.hpp>
+#include <functions.hpp>
 //#include <camera.hpp>
 //#include<camera.hpp>
 namespace mt
@@ -22,7 +23,7 @@ namespace mt
 		//std::unique_ptr<Sphere> circle1;
 		//std::unique_ptr<Line> line;
 		std::unique_ptr<Line> pillar;
-		std::unique_ptr<Line> pillar2;
+		//std::unique_ptr<Line> pillar2;
 		//std::unique_ptr<Line> line1;
 		int m_width;
 		int m_height;
