@@ -10,7 +10,7 @@ namespace mt
 		m_fi = fi;
 		m_r = r;
 		m_teta = teta;
-		m_points = new Point[m_r / 0.001];
+		m_points = new Point[200000];
 		for (double i = 0.00; i < m_r; i += 0.001)
 		{
 
@@ -31,7 +31,7 @@ namespace mt
 
 			m_points[m_size].x = i * sin(3.14 * t / 180) * cos(0) + m_x0;
 			m_points[m_size].y = i * sin(3.14 * t / 180) * sin(0) + m_y0;
-			m_points[m_size].z = i * cos(3.14 * t / 180) + m_z0;
+			m_points[m_size].z = i * cos(3.14 * t / 180)+m_z0;
 			m_size++;
 		}
 	}
