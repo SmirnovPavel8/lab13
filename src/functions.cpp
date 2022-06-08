@@ -1,7 +1,7 @@
 #include<functions.hpp>
 namespace mt
 {
-	void Rotation(int m_N, int m_N1, double& t, bool& flag, Pixel& first_c,  std::vector<Line*>& lines, std::vector<Sphere*>& spheres)
+	void Rotation(int m_N, int m_N1, double& t, bool& flag, Pixel& first_c, std::vector<Line*>& lines, std::vector<Sphere*>& spheres)
 	{
 		if (t >= 230)
 			flag = false;
@@ -84,7 +84,7 @@ namespace mt
 			}
 		}
 	}
-	void Paint(int m_N, int m_N1,std::vector<Line*>& lines, std::vector<Sphere*>& spheres, std::unique_ptr<Line>& pillar ,Camera& m_camera)
+	void Paint(int m_N, int m_N1, std::vector<Line*>& lines, std::vector<Sphere*>& spheres, std::unique_ptr<Line>& pillar, Camera& m_camera)
 	{
 		int sphere_size = spheres[0]->Get_Size();
 		int line_size = lines[0]->Get_Size();
@@ -106,4 +106,5 @@ namespace mt
 		{
 			m_camera.ProjectPoint(pillar->Get_Points(i), { 0, 255 ,255, 255 });
 		}
+	}
 }

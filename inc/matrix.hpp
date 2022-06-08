@@ -1,12 +1,10 @@
 #pragma once
 #include <iostream>
 #include <vector>
-
 namespace mt::math
 {
 	// MY_DEBUG 
 	//#define MY_DEBUG 
-
 	template<typename T, int N, int M>
 	struct MasWrapper
 	{
